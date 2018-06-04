@@ -9,9 +9,10 @@ public:
     { }
 
     void filter(const sensor_msgs::Imu::ConstPtr &imu_ptr) {
+        const auto now = ros::Time::now();
         const auto stamp = imu_ptr->header.stamp;
 
-        if (stamp <= last_stamp_) {
+        if (stamp <= last_stamp_ || stamp > now) {
             return;
         }
 
