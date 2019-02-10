@@ -12,7 +12,7 @@ catkin_package(CATKIN_DEPENDS roscpp sensor_msgs)
 
 include_directories(${catkin_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp)
+add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}.cpp)
 target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES})
 add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
 
