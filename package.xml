@@ -1,12 +1,12 @@
 <package format="2">
-    <name>imu_temporal_filter</name>
+    <name>imu_jitter_filter</name>
     <version>0.1.0</version>
-    <description>Filters sensor_msgs/Imu messages based on time.</description>
-    <maintainer email="gregjm@umich.edu">Gregory Meyer</maintainer>
+    <description>Filters jitter in sensor_msgs/Imu.</description>
+    <maintainer email="hershv@umich.edu">Hersh</maintainer>
     <license>BSD 3-Clause License</license>
 
-    <url type="repository">https://github.com/umigv/imu_temporal_filter</url>
-    <author>Gregory Meyer</author>
+    <url type="repository">https://github.com/umigv/imu_jitter</url>
+    <author>Hersh Vakharia, Kyle Scott</author>
 
     <buildtool_depend>catkin</buildtool_depend>
 

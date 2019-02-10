@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Imu.h>
+#include <cmath>
 
 struct TemporalFilter {
 public:
@@ -12,17 +13,48 @@ public:
         const auto now = ros::Time::now();
         const auto stamp = imu_ptr->header.stamp;
 
+        sensor_msgs::Imu new_data = *imu_ptr;
+        static sensor_msgs::Imu prev_data = *imu_ptr;
+
+        const float difference = 10;
+
         if (stamp <= last_stamp_ || stamp > now) {
             return;
         }
 
+        bool lin_accel_ok = dataFilter(new_data.linear_acceleration, prev_data.linear_acceleration, difference);
+        bool ang_vel_ok = dataFilter(new_data.angular_velocity, prev_data.angular_velocity, difference);
+
         last_stamp_ = stamp;
-        publisher_.publish(imu_ptr);
+
+        if (lin_accel_ok && ang_vel_ok)
+        	publisher_.publish(new_data);
+
+        prev_data = new_data;
     }
 
 private:
     ros::Time last_stamp_;
     ros::Publisher publisher_;
+    bool dataFilter(const auto &data, const auto &prev_data, const float difference)
+    {
+    	if (abs(data.x - prev_data.x) > difference)
+    	{
+    		return false;
+    	}
+
+    	if (abs(data.y - prev_data.y) > difference)
+    	{
+    		return false
+    	}
+
+    	if (abs(data.z - prev_data.z) > difference)
+    	{
+    		return false;
+    	}
+
+    	return true;
+    }
 };
 
 int main(int argc, char *argv[]) {
@@ -36,3 +68,4 @@ int main(int argc, char *argv[]) {
 
     ros::spin();
 }
+
