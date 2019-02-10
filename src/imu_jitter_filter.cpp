@@ -7,7 +7,7 @@ struct JitterFilter {
 public:
     explicit JitterFilter(ros::NodeHandle &node)
     : last_stamp_{ 0, 0 },
-      publisher_{ node.advertise<sensor_msgs::Imu>("imu/data_filtered", 10) }
+      publisher_{ node.advertise<sensor_msgs::Imu>("imu/data_jitter_filtered", 10) }
     { }
 
     void filter(const sensor_msgs::Imu::ConstPtr &imu_ptr) {
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
     JitterFilter filter{ node };
     const auto subscriber =
-        node.subscribe<sensor_msgs::Imu>("imu/data", 10,
+        node.subscribe<sensor_msgs::Imu>("imu/data_filtered", 10,
                                          &JitterFilter::filter, &filter);
 
     ros::spin();
