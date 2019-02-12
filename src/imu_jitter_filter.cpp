@@ -17,7 +17,7 @@ public:
         sensor_msgs::Imu new_data = *imu_ptr;
         static sensor_msgs::Imu prev_data = *imu_ptr;
 
-        const float difference = 1;
+        const float difference = 0.1;
 	//ROS_INFO("in filter");
 
 	/*
@@ -38,7 +38,7 @@ public:
 	}
 	else
 	{
-		std::cout << "did not publish" << std::endl;
+		std::cout << "Jitter Filter rejected incoming IMU message" << std::endl;
 	}
 	
         prev_data = new_data;
